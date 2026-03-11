@@ -1,9 +1,12 @@
 import os
 import requests
-import colorama
+from colorama import Fore, Style, init
 
-banner = """
-╔══════════════════════════════════════════════╗
+# Initialize colorama
+init(autoreset=True)
+
+banner = f"""
+{Fore.CYAN}╔══════════════════════════════════════════════╗
 ║            BAC EXAM DOWNLOADER               ║
 ║                                              ║
 ║        Download Bac Exams from BacWeb        ║
@@ -12,7 +15,7 @@ banner = """
 ║        Simple CLI Tool for Students          ║
 ║                                              ║
 ║            Created by Youssef Rouatbi        ║
-╚══════════════════════════════════════════════╝
+╚══════════════════════════════════════════════╝{Style.RESET_ALL}
 """
 print(banner)
 
@@ -32,41 +35,41 @@ subjects = {
 base_url = "http://bacweb.tn/bac"
 
 while True:
-
     print("\nChoose subject:")
     for key, value in subjects.items():
-        print(f"{key}. {value[0]}")
+        print(f"{Fore.YELLOW}{key}. {value[0]}{Style.RESET_ALL}")
 
     try:
-        choice = int(input("Enter subject number: "))
+        choice = int(input(f"{Fore.YELLOW}Enter subject number: {Style.RESET_ALL}"))
     except ValueError:
-        print("Invalid input. Please enter a number.")
+        print(f"{Fore.RED}Invalid input. Please enter a number.{Style.RESET_ALL}")
         continue
 
     if choice not in subjects:
-        print("Option not in list. Try again.")
+        print(f"{Fore.RED}Option not in list. Try again.{Style.RESET_ALL}")
         continue
 
     if choice == 0:
-        print("Goodbye.")
+        print(f"{Fore.CYAN}Goodbye.{Style.RESET_ALL}")
         break
 
     subject_name, subject_slug = subjects[choice]
 
     while True:
-        year = input("Enter year (2008 - 2025): ")
+        year = input(f"{Fore.YELLOW}Enter year (2008 - 2025): {Style.RESET_ALL}")
         if not year.isdigit():
-            print("Year must be a number.")
+            print(f"{Fore.RED}Year must be a number.{Style.RESET_ALL}")
             continue
         year = int(year)
         if year < 2008 or year > 2025:
-            print("Year must be between 2008 and 2025.")
+            print(f"{Fore.RED}Year must be between 2008 and 2025.{Style.RESET_ALL}")
             continue
         break
+
     while True:
-        correct = input("With correction? (y / n): ").lower()
+        correct = input(f"{Fore.YELLOW}With correction? (y / n): {Style.RESET_ALL}").lower()
         if correct not in ["y", "n"]:
-            print("Please enter y or n.")
+            print(f"{Fore.RED}Please enter y or n.{Style.RESET_ALL}")
             continue
         break
 
@@ -83,11 +86,11 @@ while True:
             if response.status_code == 200:
                 with open(file_path, "wb") as f:
                     f.write(response.content)
-                print(f"{exam} downloaded successfully.")
+                print(f"{Fore.GREEN}{exam} downloaded successfully.{Style.RESET_ALL}")
             else:
-                print(f"{exam} not found (Status {response.status_code})")
+                print(f"{Fore.RED}{exam} not found (Status {response.status_code}){Style.RESET_ALL}")
         except Exception as e:
-            print(f"Error downloading {exam}: {e}")
+            print(f"{Fore.RED}Error downloading {exam}: {e}{Style.RESET_ALL}")
 
         if correct == "y":
             url_c = f"{base_url}/{year}/{exam}/informatique/{subject_slug}_c.pdf"
@@ -97,10 +100,10 @@ while True:
                 if response_c.status_code == 200:
                     with open(file_path_c, "wb") as f:
                         f.write(response_c.content)
-                    print(f"{exam} correction downloaded successfully.")
+                    print(f"{Fore.GREEN}{exam} correction downloaded successfully.{Style.RESET_ALL}")
                 else:
-                    print(f"{exam} correction not found (Status {response_c.status_code})")
+                    print(f"{Fore.RED}{exam} correction not found (Status {response_c.status_code}){Style.RESET_ALL}")
             except Exception as e:
-                print(f"Error downloading correction for {exam}: {e}")
+                print(f"{Fore.RED}Error downloading correction for {exam}: {e}{Style.RESET_ALL}")
 
-    print("\nDownload finished.\n")
+    print(f"\n{Fore.CYAN}Download finished.\n{Style.RESET_ALL}")
