@@ -38,13 +38,13 @@ Python packages used:
 1. **Clone the repository**
 
 ```bash
-git clone https://github.com/youssefrouatbi/bac-exam-downloader.git
+git clone https://github.com/youssefrouatbi/exam_script.git
 ```
 
 2. **Go into the project folder**
 
 ```bash
-cd bac-exam-downloader
+cd exam_script
 ```
 
 3. **Install dependencies**
@@ -60,7 +60,7 @@ pip install requests colorama
 Run the script in your terminal:
 
 ```bash
-python downloader.py
+python script.py
 ```
 
 You will see a CLI interface with a banner and prompts:
