@@ -50,7 +50,7 @@ cd exam_script
 3. **Install dependencies**
 
 ```bash
-pip install requests colorama
+pip install -r requirements.txt
 ```
 
 ---
